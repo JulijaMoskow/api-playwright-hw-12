@@ -15,19 +15,19 @@ BASE_URL: ${{ secrets.BASE_URL }}
 API_KEY: ${{ secrets.API_KEY }}
 
 steps:
-- name: Checkout repository
-uses: actions/checkout@v4
+ - name: Checkout repository
+   uses: actions/checkout@v4
 
-- name: Set up Node.js
-uses: actions/setup-node@v4
-with:
-node-version: 20
+ - name: Set up Node.js
+   uses: actions/setup-node@v4
+   with:
+   node-version: 20
 
-- name: Install dependencies
-run: npm install
+ - name: Install dependencies
+   run: npm install
 
-- name: Install Playwright browsers
-run: npx playwright install --with-deps
+ - name: Install Playwright browsers
+   run: npx playwright install --with-deps
 
-- name: Run tests
-run: npx playwright test
+ - name: Run tests
+   run: npx playwright test
