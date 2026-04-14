@@ -1,11 +1,33 @@
-import { defineConfig } from '@playwright/test';
-import * as dotenv from 'dotenv';
+name: Playwright API Tests
 
-dotenv.config();
+on:
+push:
+branches: [ main ]
+pull_request:
+branches: [ main ]
 
-export default defineConfig({
-testDir: './tests',
-use: {
-baseURL: process.env.BASE_URL,
-},
-});
+jobs:
+test:
+runs-on: ubuntu-latest
+
+env:
+BASE_URL: ${{ secrets.BASE_URL }}
+API_KEY: ${{ secrets.API_KEY }}
+
+steps:
+- name: Checkout repository
+uses: actions/checkout@v4
+
+- name: Set up Node.js
+uses: actions/setup-node@v4
+with:
+node-version: 20
+
+- name: Install dependencies
+run: npm install
+
+- name: Install Playwright browsers
+run: npx playwright install --with-deps
+
+- name: Run tests
+run: npx playwright test
